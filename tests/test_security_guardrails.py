@@ -528,3 +528,62 @@ def test_mcp_json_is_gitignored() -> None:
         "accidental commit of MCP server configs that may carry inline "
         "GOOGLE_AI_API_KEY values."
     )
+
+
+# ---------------------------------------------------------------------------
+# Test 8: Every user-invokable SKILL.md has complete frontmatter
+# ---------------------------------------------------------------------------
+
+
+def test_user_invokable_skills_have_complete_frontmatter() -> None:
+    """Every user-invokable SKILL.md must declare ``description``,
+    ``argument-hint``, and ``license`` in frontmatter.
+
+    This test was added after a meta-audit found 15 user-invokable skills
+    missing one or both of ``argument-hint`` / ``license`` -- a class issue
+    that the chair's verifier (a single-skill check on blog-rewrite) had
+    missed. Static-presence test using the project's stdlib-only frontmatter
+    parser; no PyYAML dependency added.
+    """
+    if not SKILLS_DIR.is_dir():
+        pytest.skip(f"skills directory missing at {SKILLS_DIR}")
+
+    skill_files = sorted(SKILLS_DIR.rglob("SKILL.md"))
+    assert skill_files, f"No SKILL.md files found under {SKILLS_DIR}"
+
+    required_for_user_invokable = ("description", "argument-hint", "license")
+    offenders: list[str] = []
+
+    for path in skill_files:
+        text = _read(path)
+        fm = parse_frontmatter(text)
+        if fm is None:
+            warnings.warn(
+                f"Skill {path.relative_to(REPO_ROOT)} has no parseable "
+                "frontmatter; cannot check completeness.",
+                stacklevel=1,
+            )
+            continue
+
+        # Skip non-user-invokable skills (internal helpers like blog-chart).
+        # Treat missing user-invokable as opt-out (the project rule is
+        # explicit declaration; absence means "not a slash command").
+        user_inv = fm.get("user-invokable")
+        is_user_invokable = (
+            user_inv is True
+            or (isinstance(user_inv, str) and user_inv.lower() == "true")
+        )
+        if not is_user_invokable:
+            continue
+
+        missing = [field for field in required_for_user_invokable if field not in fm]
+        if missing:
+            offenders.append(
+                f"{path.relative_to(REPO_ROOT)}: missing {missing}"
+            )
+
+    assert not offenders, (
+        "User-invokable SKILL.md files are missing required frontmatter "
+        "fields. Every user-invokable skill MUST declare description, "
+        "argument-hint, and license:\n  - " + "\n  - ".join(offenders)
+    )

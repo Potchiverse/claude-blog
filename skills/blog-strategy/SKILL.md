@@ -10,6 +10,8 @@ description: >
   Use when user says "blog strategy", "content strategy", "blog positioning",
   "what should I blog about", "blog topics", "content pillars", "blog ideation".
 user-invokable: true
+argument-hint: "<niche>"
+license: MIT
 ---
 
 # Blog Strategy -- Positioning & Content Architecture

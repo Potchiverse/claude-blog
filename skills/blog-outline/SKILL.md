@@ -12,6 +12,8 @@ description: >
   "structure blog", "plan sections", "article skeleton", "heading structure",
   "SERP analysis", "competitive outline", "plan article".
 user-invokable: true
+argument-hint: "<topic>"
+license: MIT
 ---
 
 # Blog Outline Generator -- SERP-Informed Structure Planning

@@ -11,6 +11,8 @@ description: >
   "blog score", "check blog quality", "blog review", "rate this blog",
   "blog health check".
 user-invokable: true
+argument-hint: "<file-path>"
+license: MIT
 ---
 
 # Blog Analyzer -- Quality Audit & Scoring

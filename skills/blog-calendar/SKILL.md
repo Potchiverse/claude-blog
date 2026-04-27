@@ -9,6 +9,8 @@ description: >
   Use when user says "editorial calendar", "content calendar", "blog calendar",
   "publishing schedule", "blog plan", "content plan", "what should I write".
 user-invokable: true
+argument-hint: "[<niche>]"
+license: MIT
 ---
 
 # Blog Calendar -- Editorial Planning

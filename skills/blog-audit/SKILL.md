@@ -7,6 +7,8 @@ description: >
   and a prioritized action queue. Use when user says "audit blog", "blog audit",
   "site audit", "blog health", "audit all posts", "check all blogs".
 user-invokable: true
+argument-hint: "[directory]"
+license: MIT
 ---
 
 # Blog Audit -- Full-Site Health Assessment

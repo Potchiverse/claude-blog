@@ -7,6 +7,8 @@ description: >
   Use when user says "repurpose", "blog repurpose", "share blog", "social media",
   "twitter thread", "linkedin post", "youtube script", "reddit post".
 user-invokable: true
+argument-hint: "<file-path>"
+license: MIT
 ---
 
 # Blog Repurpose -- Cross-Platform Content Adaptation

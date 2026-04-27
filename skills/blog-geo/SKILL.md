@@ -12,6 +12,8 @@ description: >
   citation", "ai optimization", "citation audit", "aeo", "perplexity
   optimization", "chatgpt citation".
 user-invokable: true
+argument-hint: "<file-path>"
+license: MIT
 ---
 
 # Blog GEO -- AI Citation Optimization Audit

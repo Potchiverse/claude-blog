@@ -10,6 +10,8 @@ description: >
   Use when user says "write blog", "new blog post", "create article",
   "write about", "draft blog", "generate blog post".
 user-invokable: true
+argument-hint: "<topic>"
+license: MIT
 ---
 
 # Blog Writer -- New Article Generation

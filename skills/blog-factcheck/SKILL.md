@@ -10,6 +10,7 @@ description: >
   "factcheck", "source verification".
 user-invokable: true
 argument-hint: "[file]"
+license: MIT
 ---
 
 # Blog Fact-Check

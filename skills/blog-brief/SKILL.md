@@ -10,6 +10,8 @@ description: >
   when user says "content brief", "blog brief", "write brief", "outline blog",
   "plan blog post", "blog outline", "content outline".
 user-invokable: true
+argument-hint: "<topic>"
+license: MIT
 ---
 
 # Blog Brief Generator -- Content Planning
