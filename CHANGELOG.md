@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.7.1] - 2026-04-27
 
-### Security audit + remediation arc (10 commits, all CRITICAL + HIGH closed)
+### Security audit + remediation arc (12 commits, all CRITICAL + HIGH closed)
 
 The 2026-04-27 cybersecurity audit (via `/cybersecurity` skill) identified
 1 CRITICAL + 5 HIGH + 14 MEDIUM + 11 LOW + 8 INFO findings (39 total).
