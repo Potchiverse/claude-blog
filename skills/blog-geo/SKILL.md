@@ -15,6 +15,12 @@ Scores blog posts for AI citation readiness across ChatGPT, Perplexity, and
 Google AI Overviews. Generates citation capsules and a 0-100 AI Citation
 Readiness score with platform-specific recommendations.
 
+## Cross-reference
+
+This skill covers FLOW surface 3 (AI assistant citations: ChatGPT, Perplexity, Claude, Gemini, Copilot, You.com) and contributes to surface 2 (SERP plus AI Overviews). Surface mapping: `skills/blog/references/flow-alignment.md`.
+
+For directly relevant AI-citation prompts (AI-supporting-pages-rewrite-prompt, ai-detector-test, ChatGPT discovery, visibility prompts), see `/blog flow optimize`.
+
 ## Key Research Data
 
 Reference these benchmarks throughout the audit:

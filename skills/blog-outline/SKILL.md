@@ -17,6 +17,10 @@ alternative to a full content brief - produces heading hierarchy, section
 targets, and content gap notes without deep statistics research or full
 competitive analysis.
 
+## Cross-reference
+
+For evidence-led topical-relevance and content-planning prompts upstream of outlining, see `/blog flow find`. The blog-post-outline-prompt under `/blog flow optimize` is a complementary structural reference.
+
 ## Workflow
 
 ### Step 1: Topic & Intent

@@ -121,6 +121,10 @@ analysis report.
 
 Standalone usage: `/blog factcheck path/to/post.md`
 
+## Cross-reference
+
+claude-blog inherits FLOW's evidence triple (year anchor in prose, inline citation with publisher and title, URL with retrieval date). See `skills/blog-flow/references/flow-framework.md` and `/blog flow` for the full framework.
+
 ## Limitations
 
 - **Paywalled content**: WebFetch cannot access content behind login walls. These

@@ -21,6 +21,10 @@ Reference documents:
 - `references/distribution-playbook.md` -- channel-specific distribution tactics
 - `references/internal-linking.md` -- link architecture patterns
 
+## Cross-reference
+
+For evidence-led keyword discovery, audience-avatar prompts, and content prioritization (directly upstream of brief generation), see `/blog flow find`.
+
 ## Workflow
 
 ### Step 1: Topic Intake

@@ -23,6 +23,10 @@ and AI citation platforms. Preserves the author's voice while applying the
 - `references/internal-linking.md` - Linking strategy and anchor text rules
 - `references/visual-media.md` - Image sourcing and chart styling
 
+## Cross-reference
+
+For 21 evidence-led optimization prompts (AI-detector test, CTR audit, schema, PAA rewording, technical audit, ChatGPT visibility) directly applicable to rewrite work, see `/blog flow optimize`.
+
 ## Workflow
 
 ### Phase 1: Audit (Read-Only)

@@ -130,6 +130,21 @@ Every blog post targets these 6 optimization pillars:
 | Content Structure | AI extractability | 50-150 word chunks, question headings, proper H hierarchy |
 | Freshness Signals | 76% of top citations | Updated within 30 days, dateModified schema |
 
+### How the 6 Pillars map to the FLOW framework (v1.7.0)
+
+claude-blog adopts the FLOW evidence-led model (`github.com/AgriciDaniel/flow`, CC BY 4.0). The 6 Pillars stay as-is; they become the operational expression of FLOW's principles. Mapping:
+
+| Pillar | FLOW concept it implements | claude-blog adds beyond FLOW |
+|--------|---------------------------|------------------------------|
+| Answer-First Formatting | "Extraction-readable" passages for AI Overviews and assistant citations | Concrete 40-60 word format spec |
+| Real Sourced Data | The FLOW evidence triple: year anchor in prose + inline citation (publisher + title) + URL with retrieval date | Tier 1-3 source classification, `blog-factcheck` automation |
+| Visual Media | (Outside FLOW scope; FLOW is asset-agnostic) | Full pipeline: Gemini image gen, SVG charts, stock libraries, YouTube embeds |
+| FAQ Schema | Structured Q&A as an AI-citation surface signal | JSON-LD generation via `blog-schema` |
+| Content Structure | "AI-readable document" with clear headings, direct answers, source labels | 50-150 word chunk rule, proper H hierarchy enforcement |
+| Freshness Signals | Year anchor in prose; source retrieval dates | dateModified schema, 30-day freshness threshold, `blog-audit` decay detection |
+
+The FLOW evidence triple is enforced AT DRAFTING time inside `blog-write` (not just at audit). For the full alignment doc (5-surface model, FLOW stages mapped to skills, what claude-blog adds), load `references/flow-alignment.md`. For the upstream FLOW framework itself, load `skills/blog-flow/references/flow-framework.md` or run `/blog flow` for prompt-driven workflows.
+
 ## Quality Gates
 
 These are hard rules. Never ship content that violates them:

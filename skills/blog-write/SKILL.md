@@ -25,6 +25,26 @@ follows the 6 pillars of dual optimization (Google rankings + AI citations).
 
 ## Workflow
 
+### Phase 0: Surface Targeting (do this BEFORE research)
+
+Decide which of the FLOW 5 surfaces this post is meant to win. The choice
+shapes structure, length, citation density, and call-to-action. The 5 surfaces
+in 2026:
+
+1. Owned site (organic Google ranking)
+2. SERP including AI Overviews
+3. AI assistant citations (ChatGPT, Perplexity, Claude, Gemini, Copilot, You.com)
+4. Local pack (out of scope for blog content; use claude-seo for local)
+5. Communities and video (Reddit, YouTube, LinkedIn, Quora, niche forums)
+
+Most posts target surfaces 1, 2, and 3 by default. If the same query also
+surfaces in a community (Reddit thread, YouTube comment), apply dual-surface
+thinking: optimize the post for extraction AND plan a community echo (covered
+in `/blog repurpose`).
+
+For a deeper surface-by-surface workflow, see
+`skills/blog/references/flow-alignment.md` and `/blog flow find`.
+
 ### Phase 1: Topic Understanding
 
 1. **Clarify the topic** - If the user provides just a topic, ask:
@@ -243,6 +263,36 @@ Pattern:
 question in 1-2 more sentences, explaining the implication and what this means
 for the reader.]
 ```
+
+**FLOW evidence triple (drafting requirement, not just audit):**
+
+Every public statistic must carry three components AT DRAFTING TIME:
+
+1. **Year anchor in prose.** Write "In 2026," or "As of Q1 2026," BEFORE
+   the statistic, in the sentence body. Year buried inside parentheses
+   does not count. Example:
+   - GOOD: "In 2026, Ahrefs found a 58% lower CTR for position one when
+     an AI Overview was present."
+   - WEAK: "Position-one CTR dropped 58% (Ahrefs, 2026)."
+
+2. **Inline citation with publisher and title.** Name both the publisher
+   and the document title (or report name), not just a brand. Example:
+   - GOOD: "Ahrefs, AI Overviews CTR update, December 2025"
+   - WEAK: "Ahrefs reported..."
+
+3. **URL plus retrieval date in the source block at the bottom of the post.**
+   Provenance discipline lets future readers and AI crawlers verify the
+   source still says what was claimed. Format:
+   - "[Publisher], [Title], retrieved YYYY-MM-DD, [full URL]"
+
+**FLOW quality bar (drop or replace):**
+Public claims must use verified sources OR stay qualitative. If a statistic
+cannot be verified, drop it. If it is contradicted by a more recent source,
+replace it with the verified alternative. Do not soften vague language to
+keep an unsourceable number.
+
+For evidence-led optimization prompts (CTR audit, AI detector test, schema,
+PAA rewording, ChatGPT visibility), see `/blog flow optimize`.
 
 #### 5d. Information Gain Markers
 
