@@ -9,8 +9,10 @@ subagents, 12 content templates, and 21 reference docs are dual-optimized for Go
 (December 2025 Core Update, E-E-A-T) and AI citations (GEO/AEO). Includes FLOW framework
 integration, semantic topic-cluster planning + execution, multilingual publishing (Pro Hub
 Challenge v1.7.0), BRAND.md/VOICE.md/DISCOURSE.md project-root context auto-load (v1.8.0,
-fenced via `scripts/load_untrusted_root.py` with CSPRNG nonces, v1.8.3+), and CI-enforced
-prose hygiene via `scripts/lint_prose.py` (v1.8.4+).
+fenced via `scripts/load_untrusted_root.py` with CSPRNG nonces, v1.8.3+), CI-enforced
+prose hygiene via `scripts/lint_prose.py` (v1.8.4+), and the 5-gate Blog Delivery Contract
+(v1.9.0, `skills/blog/references/blog-delivery-contract.md`) that runs `blog_preflight.py`
++ a BLOCKING `blog-reviewer` agent between every draft and the user.
 
 ## Architecture
 
@@ -19,13 +21,16 @@ claude-blog/
   CLAUDE.md                          # Project instructions (this file)
   CONTRIBUTORS.md                    # Pro Hub Challenge attribution and integration decisions
   CHANGELOG.md                       # Keep a Changelog format
-  .claude-plugin/plugin.json         # Plugin manifest (v1.8.5+)
+  .claude-plugin/plugin.json         # Plugin manifest (v1.9.0)
   .claude-plugin/marketplace.json    # Marketplace catalog for distribution
   .mcp.json                          # MCP server configuration (nanobanana-mcp)
   pyproject.toml                     # Python packaging (3.11+)
   scripts/analyze_blog.py            # 5-category quality scoring (stdlib)
+  scripts/blog_preflight.py          # 5-gate delivery contract runner (v1.9.0)
+  scripts/blog_render.py             # md -> html -> pdf renderer; XSS-safe JSON-LD (v1.9.0)
   scripts/cognitive_load.py          # Per-section concept-density analyzer (v1.8.0)
   scripts/discourse_research.py      # Discourse brief synthesis from SERP JSON (v1.8.0)
+  scripts/generate_hero.py           # Hero image ladder: Banana -> Gemini -> stock -> Openverse (v1.9.0)
   scripts/load_untrusted_root.py     # Code-enforced fence helper for BRAND/VOICE/DISCOURSE (v1.8.3)
   scripts/lint_prose.py              # Fence-aware prose-hygiene linter (v1.8.4; CI-enforced)
   scripts/sync_flow.py               # Pulls FLOW references (stdlib, sandboxed)
@@ -89,7 +94,7 @@ claude-blog/
     blog-seo.md                     # SEO validation
     blog-reviewer.md                # Quality scoring (no Bash, post v1.7.0 hardening)
     blog-translator.md              # Multilingual translation (no Bash, v1.7.0)
-  tests/                             # pytest suite incl. test_security_guardrails.py
+  tests/                             # pytest suite (160 tests) incl. test_blog_delivery_contract.py + test_security_guardrails.py
 ```
 
 ## Commands

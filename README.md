@@ -53,7 +53,7 @@ install.sh and pin a release tag, closing audit VULN-005):
 ```bash
 git clone https://github.com/AgriciDaniel/claude-blog.git
 cd claude-blog
-git checkout v1.8.6          # pin to a release tag (latest as of 2026-05-17)
+git checkout v1.9.0          # pin to a release tag (latest as of 2026-05-18)
 chmod +x install.sh && ./install.sh
 ```
 
@@ -108,7 +108,7 @@ Restart Claude Code after installation to activate.
 | `/blog brand [init\|show\|update]` | Generate BRAND.md + VOICE.md context auto-loaded by all sub-skills (v1.8.0) |
 | `/blog discourse <topic>` | API-free last-30-days discourse research; produces DISCOURSE.md (v1.8.0) |
 
-> **30 sub-skill directories total**: 29 user-invokable (28 distinct slash commands above + `/blog update` aliased to rewrite) + 1 internal-only (`blog-chart`, invoked by blog-write/blog-rewrite for inline SVG charts). `blog-image` is user-invokable AND callable internally. v1.7.0 added `blog-cluster`, `blog-multilingual`, `blog-translate`, `blog-localize`, `blog-locale-audit`, and `blog-flow`. v1.8.0 added `blog-brand` and `blog-discourse`.
+> **30 sub-skill directories total**: 29 user-invokable (28 distinct slash commands above + `/blog update` aliased to rewrite) + 1 internal-only (`blog-chart`, invoked by blog-write/blog-rewrite for inline SVG charts). `blog-image` is user-invokable AND callable internally. v1.7.0 added `blog-cluster`, `blog-multilingual`, `blog-translate`, `blog-localize`, `blog-locale-audit`, and `blog-flow`. v1.8.0 added `blog-brand` and `blog-discourse`. v1.9.0 adds the 5-gate Blog Delivery Contract (see Architecture section below).
 
 ### Foundational methodologies (v1.8.0 references)
 
@@ -209,7 +209,7 @@ claude-blog/
 │   │   ├── SKILL.md                    # Routes all 29 user-facing commands (28 distinct + `/blog update` alias)
 │   │   ├── references/                 # 21 on-demand reference docs (5 new in v1.8.0, 1 new in v1.9.0)
 │   │   └── templates/                  # 12 content type templates
-│   ├── blog-write/SKILL.md            # Sub-skills (28 user-facing + 2 internal-only)
+│   ├── blog-write/SKILL.md            # Sub-skills (29 user-invokable + 1 internal-only blog-chart)
 │   ├── blog-rewrite/SKILL.md
 │   ├── blog-analyze/SKILL.md
 │   ├── blog-brief/SKILL.md
@@ -251,20 +251,28 @@ claude-blog/
 │   └── blog-translator.md             # v1.7.0; runs without Bash for blast-radius safety
 ├── scripts/
 │   ├── analyze_blog.py                 # Python quality analysis (5-category scoring)
+│   ├── blog_preflight.py               # 5-gate delivery contract runner (v1.9.0)
+│   ├── blog_render.py                  # md -> html -> pdf renderer with XSS-safe JSON-LD (v1.9.0)
 │   ├── cognitive_load.py               # Per-section concept-density analyzer (v1.8.0)
 │   ├── discourse_research.py           # Discourse brief synthesis from SERP JSON (v1.8.0)
+│   ├── generate_hero.py                # Hero image ladder: Banana -> Gemini -> stock -> Openverse (v1.9.0)
 │   ├── load_untrusted_root.py          # Code-enforced BRAND/VOICE/DISCOURSE fencing helper (v1.8.3)
 │   ├── lint_prose.py                   # CI prose-hygiene linter (v1.8.4; fence-aware)
 │   └── sync_flow.py                    # FLOW reference sync (stdlib, sandboxed)
-├── tests/                              # pytest test suite (130+ tests, 0 skips)
+├── tests/                              # pytest test suite (160 tests, 0 skips)
 │   ├── conftest.py
 │   ├── test_analyze_blog.py
+│   ├── test_blog_delivery_contract.py  # v1.9.0 (XSS / symlink / frontmatter mutation-verified)
 │   ├── test_cognitive_load.py          # v1.8.0
+│   ├── test_command_coherence.py       # v1.8.5 (SKILL.md <-> COMMANDS.md command-set parity)
 │   ├── test_discourse_research.py      # v1.8.0
+│   ├── test_installer_sync.py          # v1.8.6 (every scripts/*.py shipped + removed)
+│   ├── test_lint_prose.py              # v1.8.4 (fence-aware prose-hygiene tests)
 │   ├── test_load_untrusted_root.py     # v1.8.3 (behavioral nonce + sanitize tests)
 │   ├── test_security_guardrails.py
-│   └── test_security_v1_8_0.py         # v1.8.0 (path traversal + DoS + contract regression)
-├── docs/                               # 6 documentation files
+│   ├── test_security_v1_8_0.py         # v1.8.0 (path traversal + DoS + contract regression)
+│   └── test_version_coherence.py       # v1.8.5 (pyproject / plugin.json / CITATION / SKILL.md aligned)
+├── docs/                               # 7 documentation files
 ├── .github/workflows/ci.yml           # CI pipeline
 ├── install.sh                          # Unix/macOS installer (fallback)
 ├── install.ps1                         # Windows PowerShell installer
@@ -284,7 +292,7 @@ claude-blog/
 
 ### Quality Gates (CI-enforced on every PR)
 
-1. **pytest**: 130+ tests across security, behavioral, and regression suites
+1. **pytest**: 160 tests across security, behavioral, regression, and delivery-contract suites
 2. **Plugin validation**: `claude plugin validate .` (when CLI available) + hand-rolled JSON/regex checks
 3. **Stale-path lint**: catches drift in `references/` and `templates/` cross-references
 4. **Prose hygiene**: `scripts/lint_prose.py` (fence-aware, backtick-aware) enforces CONTRIBUTING.md no-em-dash / no-en-dash / no-` -- ` rule
