@@ -51,6 +51,65 @@ HEAD_TIMEOUT = 10
 USER_AGENT = "claude-blog/1.9.0 preflight (+https://github.com/AgriciDaniel/claude-blog)"
 URL_ALLOWLIST = ("localhost", "127.0.0.1", "example.com", "example.org")
 
+# VULN-802 code-enforced iteration counter (v1.9.1).
+# The contract documents "up to 3 retries before escalating." v1.9.0
+# enforced this only as orchestrator prose; any draft-controlled text
+# could convince the orchestrator the counter was at 0. v1.9.1 backs the
+# claim with a file on disk that survives across preflight invocations.
+ITERATION_COUNTER_FILE = ".iteration-count"
+MAX_ITERATIONS = 3
+EXIT_ITERATION_CAP = 2
+
+
+def _iteration_check(draft: Path, reset: bool = False) -> int:
+    """Read/increment the per-draft iteration counter; refuse past cap.
+
+    Behavior:
+      * reset=True: counter is set to 1 (this run counts as iteration 1).
+      * reset=False, counter absent or corrupt: counter is set to 1.
+      * reset=False, counter at MAX_ITERATIONS: emit stderr message and
+        return EXIT_ITERATION_CAP. Caller should sys.exit(2).
+      * Otherwise: counter += 1; return 0.
+
+    Fail-soft on corrupt counter file: a non-integer value resets to 1
+    rather than refusing to run (an attacker who can write to the draft
+    folder has bigger problems; refusing on garbage would be a self-DoS).
+    """
+    counter_path = draft / ITERATION_COUNTER_FILE
+    if reset:
+        _atomic_write_counter(counter_path, 1)
+        return 0
+    try:
+        raw = counter_path.read_text(encoding="utf-8").strip()
+        current = int(raw)
+    except (FileNotFoundError, ValueError, OSError):
+        current = 0
+    if current >= MAX_ITERATIONS:
+        sys.stderr.write(
+            f"ITERATION CAP EXCEEDED: this draft has used all {MAX_ITERATIONS} "
+            f"preflight iterations. Escalate to the user, or run with "
+            f"--reset-iterations after a code change.\n"
+        )
+        return EXIT_ITERATION_CAP
+    _atomic_write_counter(counter_path, current + 1)
+    return 0
+
+
+def _atomic_write_counter(path: Path, value: int) -> None:
+    """Atomic write of the integer counter (mkstemp + os.replace)."""
+    import tempfile
+    fd, tmp = tempfile.mkstemp(dir=str(path.parent), prefix=f".{path.name}.", suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(f"{int(value)}\n")
+        os.replace(tmp, str(path))
+    except Exception:
+        try:
+            os.unlink(tmp)
+        except OSError:
+            pass
+        raise
+
 
 def _gate_result(gate: int, name: str, passed: bool, violations: Optional[list] = None, warnings: Optional[list] = None, **kwargs: Any) -> dict:
     return {
@@ -496,12 +555,22 @@ def main() -> int:
     parser.add_argument("--strict", dest="strict", action="store_true", default=True)
     parser.add_argument("--no-strict", dest="strict", action="store_false")
     parser.add_argument("--json", action="store_true", help="Emit report JSON to stdout")
+    parser.add_argument(
+        "--reset-iterations",
+        action="store_true",
+        help="Reset the per-draft iteration counter to 1 (this run counts as the first).",
+    )
     args = parser.parse_args()
 
     draft = Path(args.draft).resolve()
     if not draft.is_dir():
         print(f"ERROR: {draft} is not a directory", file=sys.stderr)
         return 1
+
+    # VULN-802 (v1.9.1): code-enforced iteration cap. Refuse past MAX_ITERATIONS.
+    iteration_exit = _iteration_check(draft, reset=args.reset_iterations)
+    if iteration_exit != 0:
+        return iteration_exit
 
     gates = [
         (1, gate_1_capability_discovery),
