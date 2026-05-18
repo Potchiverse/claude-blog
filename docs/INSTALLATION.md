@@ -54,6 +54,27 @@ after the main install:
 pip install -r requirements.txt
 ```
 
+#### Reproducible install via uv (v1.9.1+)
+
+For deterministic supply-chain hygiene, the repo ships `uv.lock` (142
+packages with SHA-256 hashes for every wheel). Reproduce the exact
+dev environment with:
+
+```bash
+pip install uv          # one-time
+uv sync --frozen        # installs from uv.lock with hash verification
+```
+
+This is the recommended path for CI, audit, and any context where
+"works on my machine" is not enough. The legacy `pip install -e ".[dev]"`
+flow still works; it just resolves transitives freshly each time.
+
+Regenerate `uv.lock` after editing `pyproject.toml` dependency bounds:
+
+```bash
+uv lock
+```
+
 **Core dependencies:**
 
 | Package | Version | Purpose |
