@@ -453,7 +453,20 @@ If triggered:
 
 ### Phase 6: Quality Check
 
-Before delivering, verify:
+**Run the QC script first.** Most checks below are automated:
+
+```bash
+python3 skills/blog-write/scripts/quality_check.py <path-to-draft.md>
+```
+
+The script reports word count, em dash count vs. budget, banned-phrase
+hits, structural presence (frontmatter, H1, Key Takeaways, FAQ, Sources,
+Medical Disclaimer), and counts of [IMAGE NEEDED], [INTERNAL-LINK],
+[CITATION CAPSULE], and info-gain markers. Use `--json` for machine-readable
+output. Address every flagged item before delivery.
+
+Then verify the items the script cannot check (heading question framing,
+paragraph word counts, source tier quality, citation capsule self-containment):
 
 #### Structure and Content
 1. Every H2 opens with a statistic + source
