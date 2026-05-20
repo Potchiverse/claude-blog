@@ -3,10 +3,10 @@ name: blog-write
 description: >
   Write new blog articles from scratch optimized for Google rankings and AI
   citations. Generates full articles with template selection, answer-first
-  formatting, Key Takeaways summary box, information gain markers, citation capsules, sourced
-  statistics, Pixabay/Unsplash images, built-in SVG chart generation, FAQ schema,
-  internal linking zones, and proper heading hierarchy. Supports MDX, markdown,
-  and HTML output.
+  formatting, Key Takeaways summary box, information gain markers, citation
+  capsules, sourced statistics, [IMAGE NEEDED] placeholders, built-in SVG chart
+  generation, FAQ schema, internal linking zones, and proper heading hierarchy.
+  Supports MDX, markdown, and HTML output.
   Use when user says "write blog", "new blog post", "create article",
   "write about", "draft blog", "generate blog post".
 user-invokable: true
@@ -106,30 +106,18 @@ Spawn a `blog-researcher` agent (or do inline research with WebSearch):
    - Search: `[topic] study 2025 2026 data statistics`
    - Prioritize tier 1-3 sources (see `skills/blog/references/quality-scoring.md`)
    - Record: statistic, source name, URL, date, methodology
-2. **Find a cover image** (wide, high-quality, topic-relevant):
-   - Search: `site:pixabay.com [topic] wide banner` (preferred)
-   - Alternative: `site:unsplash.com [topic] wide`
-   - Fallback: `site:pexels.com [topic] wide banner`
-   - Target dimensions: 1200x630 (OG-compatible) or 1920x1080
-   - Or generate a custom SVG cover via `blog-chart` (text-on-gradient with key stat)
-   - Or generate a custom AI image via `blog-image` sub-skill (if nanobanana-mcp configured)
-   - See `skills/blog/references/visual-media.md` for cover image sizing details
-3. **Find 3-5 inline images** from open-source platforms:
-   - **Pixabay** (preferred): Search `site:pixabay.com [topic keywords]`
-     - Extract image URL from page
-     - Direct URLs: `https://cdn.pixabay.com/photo/YYYY/MM/DD/HH/MM/filename.jpg`
-     - Verify with `curl -sI "<url>" | head -1` returns HTTP 200
-   - **Unsplash** (alternative): Search `site:unsplash.com [topic keywords]`
-     - Build URL: `https://images.unsplash.com/photo-<id>?w=1200&h=630&fit=crop&q=80`
-   - **Pexels** (fallback): Search `site:pexels.com [topic keywords]`
-4. **Plan data visualizations** only if the article contains 3 or more
+2. **Mark image placeholder locations** (do NOT search stock photo sites):
+   - Identify the cover image slot and every section where an image would
+     improve comprehension or break up dense text
+   - For each, record a one-sentence description of what the image should
+     visually communicate (used later as alt text + sourcing brief)
+   - These will be inserted in the draft as
+     `[IMAGE NEEDED: one-sentence description]` markers
+   - The user (or a downstream pass) sources the actual images after drafting
+3. **Plan data visualizations** only if the article contains 3 or more
    comparable data points that would be clearer as a visual than as prose.
    If that condition is not met, skip chart generation entirely.
-5. **AI image generation** (optional, if nanobanana-mcp configured):
-   - If stock photo results are insufficient (< 3 good matches) or topic is too niche
-   - Generate custom hero image and/or inline illustrations via `blog-image` sub-skill
-   - Stock photos remain default - AI generation supplements, never replaces
-6. **NotebookLM research** (optional, if user has relevant notebooks):
+4. **NotebookLM research** (optional, if user has relevant notebooks):
    - If the user mentions a NotebookLM notebook or the topic aligns with a configured notebook
    - Query via `blog-notebooklm` for source-grounded data from user-uploaded documents
    - Treat NotebookLM responses as Tier 1 sources (user's own primary documents)
@@ -229,7 +217,7 @@ Write the full article following these rules:
 ---
 title: "[Question-format title with primary keyword]"
 description: "[Fact-dense, 150-160 chars, includes 1 statistic]"
-coverImage: "[URL from Pixabay/Unsplash/Pexels or generated SVG path]"
+coverImage: "[IMAGE NEEDED: descriptive sentence — replace with final URL during sourcing]"
 coverImageAlt: "[Descriptive sentence about the cover image]"
 ogImage: "[Same as coverImage, or custom OG image URL]"
 date: "YYYY-MM-DD"

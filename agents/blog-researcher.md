@@ -2,9 +2,9 @@
 name: blog-researcher
 description: >
   Research specialist for blog content. Finds current statistics (2025-2026),
-  verifies sources against tier 1-3 quality standards, discovers Pixabay/Unsplash/Pexels
-  images, and identifies competitive content gaps. Invoked for statistic research,
-  image discovery, and competitive analysis tasks during blog writing workflows.
+  verifies sources against tier 1-3 quality standards, marks image placeholder
+  locations, and identifies competitive content gaps. Invoked for statistic
+  research and competitive analysis tasks during blog writing workflows.
 tools:
   - WebSearch
   - WebFetch
@@ -77,16 +77,6 @@ Place one placeholder per major section, approximately every 300-500 words.
 Use descriptive alt-text language in the placeholder — say what the image
 should visually communicate, not just the topic name.
 
-### When Stock Photos Are Insufficient
-
-If fewer than 3 suitable stock images are found, or the topic is too niche/abstract:
-
-1. Note in output: "AI image generation recommended for this topic"
-2. Suggest specific image concepts with domain mode hints:
-   - "Hero: Editorial mode - [description of ideal hero image]"
-   - "Section 3: Infographic mode - [description of data illustration]"
-3. Do NOT call MCP tools directly. The `blog-image` sub-skill handles generation
-
 ### When Querying NotebookLM
 
 If the user has NotebookLM notebooks relevant to the blog topic, use them for
@@ -135,11 +125,11 @@ Return structured findings:
 |---|-----------|--------|-----|------|----------|
 | 1 | [value] | [source] | [url] | [date] | Yes/No |
 
-### Images Found ([N] total)
+### Image Placeholders Recommended ([N] total)
 
-| # | Platform | URL | Alt Text | Topic Relevance |
-|---|----------|-----|----------|----------------|
-| 1 | Pixabay | [url] | [alt] | [relevance] |
+| # | Section / Location | Placeholder Description |
+|---|--------------------|--------------------------|
+| 1 | [H2 section name]  | [one-sentence visual description for [IMAGE NEEDED: ...]] |
 
 ### Competitive Analysis
 
@@ -149,33 +139,17 @@ Return structured findings:
 
 ### Recommended Chart Data
 [2-4 data sets suitable for visualization with chart type suggestions]
-
-### AI Image Recommendations (if stock insufficient)
-
-| # | Image Type | Domain Mode | Concept Description |
-|---|-----------|-------------|---------------------|
-| 1 | [hero/inline] | [Editorial/Product/etc.] | [description] |
 ```
 
-## Cover Image Search
+## Image Placeholder Density
 
-When finding cover images:
-1. Search Pixabay first: `site:pixabay.com [topic] [context]`
-2. Search Unsplash: `site:unsplash.com [topic]`
-3. Search Pexels: `site:pexels.com [topic]`
-4. All three platforms are equal quality - Pixabay for no-attribution convenience
-5. Verify image exists and note dimensions (target: 1200x630 or wider)
-6. Write descriptive alt text: full sentence, 10-125 chars, topic keywords naturally
-
-## Image Density Calculation
-
-Calculate required images based on content type:
-| Content Type | Image per N Words |
-|-------------|-------------------|
-| Listicle | 1 per 133 words |
-| How-to guide | 1 per 179 words |
-| Long-form/pillar | 1 per 200-250 words |
-| Case study | 1 per 307 words |
+Recommend placeholders based on content type:
+| Content Type     | Placeholder per N Words |
+|------------------|-------------------------|
+| Listicle         | 1 per 133 words         |
+| How-to guide     | 1 per 179 words         |
+| Long-form/pillar | 1 per 200-250 words     |
+| Case study       | 1 per 307 words         |
 
 ## Competitor Content Gap Analysis
 
