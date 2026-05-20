@@ -136,12 +136,11 @@ To avoid AI-detectable writing:
 - Vary sentence length deliberately (mix 8-word and 25-word sentences)
 - Inject rhetorical questions every 200-300 words
 - Use contractions naturally ("it's", "we've", "don't")
-- Include hedging language: "in our experience", "we've found that"
-- NEVER use em dashes (-). Replace with commas, hyphens (-), colons, or periods.
-  Transform "X - Y" patterns to "X, Y" or "X - Y" or split into two sentences.
-- NEVER use: "in today's digital landscape", "it's important to note",
-  "dive into", "game-changer", "navigate the landscape", "revolutionize",
-  "seamlessly", "cutting-edge", "harness the power of", "leverage" (as verb)
+- Maximum 1 em dash per 400 words. Default to commas, parentheses,
+  or periods. Do not use em dashes for dramatic pauses or emphasis.
+- Before writing, read `skills/blog/references/banned-phrases.md`.
+  NEVER use any word, phrase, or structural pattern listed in that file.
+  Check every draft against it before returning content.
 
 ## Post-Draft Readability Check
 
@@ -186,12 +185,11 @@ Before returning content, verify:
 - [ ] Natural, conversational tone throughout
 - [ ] Key Takeaways box present after introduction
 - [ ] 2-3 information gain markers used
-- [ ] No known AI-detectable phrases
-- [ ] Zero em dashes in the content (use commas, hyphens, colons, or periods instead)
+- [ ] No phrases or patterns from `skills/blog/references/banned-phrases.md`
+- [ ] Maximum 1 em dash per 400 words
 - [ ] Visual element (image, chart, or callout) every 300-500 words
 - [ ] No two consecutive visuals of the same type
 - [ ] Citation capsules in major sections
 - [ ] Internal linking zones marked
-- [ ] Every embedded image URL was verified by the researcher (Verified column = Yes)
-- [ ] No page URLs used as image src -- only direct CDN/image file URLs
+- [ ] Image placeholders ([IMAGE NEEDED: ...]) present at each major section
 - [ ] Image alt text is a full descriptive sentence (not just keywords)

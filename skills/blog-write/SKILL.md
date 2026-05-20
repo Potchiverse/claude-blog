@@ -50,6 +50,16 @@ in `/blog repurpose`).
 For a deeper surface-by-surface workflow, see
 `skills/blog/references/flow-alignment.md` and `/blog flow find`.
 
+### Step 0: Load Client Configuration
+
+Check if `client-config.md` exists in the current working directory.
+- If it exists: read it and apply all settings for this entire session
+  (brand voice notes, CMS platform, FAQ preference, schema preference,
+  internal linking targets, banned topics, medical disclaimer requirement).
+  Confirm to the user which settings were loaded.
+- If it does not exist: continue with defaults. Note at the end of
+  the session: "No client-config.md found. Create one for faster setup."
+
 ### Phase 1: Topic Understanding
 
 1. **Clarify the topic** - If the user provides just a topic, ask:
@@ -112,9 +122,9 @@ Spawn a `blog-researcher` agent (or do inline research with WebSearch):
    - **Unsplash** (alternative): Search `site:unsplash.com [topic keywords]`
      - Build URL: `https://images.unsplash.com/photo-<id>?w=1200&h=630&fit=crop&q=80`
    - **Pexels** (fallback): Search `site:pexels.com [topic keywords]`
-4. **Plan 2-4 data visualizations** from researched statistics
-   - Select diverse chart types (see `skills/blog/references/visual-media.md`)
-   - Map data points to chart formats
+4. **Plan data visualizations** only if the article contains 3 or more
+   comparable data points that would be clearer as a visual than as prose.
+   If that condition is not met, skip chart generation entirely.
 5. **AI image generation** (optional, if nanobanana-mcp configured):
    - If stock photo results are insufficient (< 3 good matches) or topic is too niche
    - Generate custom hero image and/or inline illustrations via `blog-image` sub-skill
@@ -124,11 +134,6 @@ Spawn a `blog-researcher` agent (or do inline research with WebSearch):
    - Query via `blog-notebooklm` for source-grounded data from user-uploaded documents
    - Treat NotebookLM responses as Tier 1 sources (user's own primary documents)
    - Falls back silently if not configured or not authenticated
-7. **Find relevant YouTube videos** (2-3 per post):
-   - Use `blog-google` youtube command or WebSearch `site:youtube.com [topic] [year]`
-   - Apply quality criteria from `skills/blog/references/video-embeds.md` (min score 50/100)
-   - Select 2-3 best videos. Falls back silently if none found.
-
 ### Phase 3: Outline Generation
 
 Create a structured outline before writing. If a template was loaded in Phase 1.5,
@@ -387,21 +392,12 @@ anchor text rules and linking strategy.
 - H3s for subsections only - never skip levels
 - Include primary keyword naturally in 2-3 headings
 
-#### 5i. Image Embedding
+#### 5i. Image Placeholders
 
-Standard markdown:
-```markdown
-![Descriptive alt text - topic keywords naturally](https://cdn.pixabay.com/photo/...)
-```
-
-MDX with Next.js Image (if detected):
-```mdx
-![Descriptive alt text - topic keywords naturally](https://cdn.pixabay.com/photo/...)
-```
-
-- Place images after H2 headings, before body text
-- Space evenly throughout the post (not clustered)
-- Alt text should be a full descriptive sentence
+Insert image placeholders where visuals would improve comprehension
+or break up dense text. Format: [IMAGE NEEDED: one sentence describing
+what the image should show]. Place one placeholder per major section
+approximately every 300-500 words.
 
 #### 5j. Chart Embedding
 
@@ -454,6 +450,19 @@ Answer with statistic and source attribution (40-60 words).
 - Link to relevant existing content naturally
 - Use descriptive anchor text (not "click here")
 
+### Phase 5.5: Voice Pass (Optional)
+
+Only run if the user's request included "use my voice", "apply voice",
+or "voice pass". Otherwise skip entirely and proceed to Phase 6.
+
+If triggered:
+1. Read `agents/blog-voice.md`
+2. Apply the voice rules to the Phase 5 draft
+3. Preserve all SEO elements: answer-first formatting, citation capsules,
+   frontmatter, FAQ schema, internal link zones, statistics, disclaimers
+4. Do not alter statistics or source attributions
+5. Return voice-styled draft before Phase 6
+
 ### Phase 6: Quality Check
 
 Before delivering, verify:
@@ -476,18 +485,30 @@ Before delivering, verify:
 13. Internal linking zones marked in introduction, H2 sections, FAQ, and conclusion
 14. No AI-detectable phrases from banned list (see `agents/blog-writer.md`)
 
-#### Burstiness and Naturalness Check
-15. **Sentence length variance** - Verify a mix of short (8-word) and long (25-word) sentences. Uniform sentence length signals AI authorship.
-16. **Banned AI phrase scan** - Check for and remove:
-    - "in today's digital landscape", "it's important to note", "dive into"
-    - "game-changer", "navigate the landscape", "revolutionize", "seamlessly"
-    - "cutting-edge", "harness the power of", "leverage" (as verb)
-    - "delve", "crucial", "elevate", "foster", "landscape" (overused)
-    - "multifaceted", "robust", "tapestry", "embark"
-    - Full list in `agents/blog-writer.md`
-17. **Contractions** - Verify natural use of contractions ("it's", "we've", "don't", "isn't"). Formal AI prose avoids contractions; natural writing uses them.
-18. **Rhetorical questions** - Verify at least one rhetorical question every 200-300 words to break up declarative patterns.
-19. **YouTube videos** - 2-3 embeds with lazy loading, aria-labels, and noscript fallback (see `skills/blog/references/video-embeds.md`)
+#### Voice and Phrase Quality Check
+
+15. **Banned phrase and pattern scan** — Check the full draft against
+    `skills/blog/references/banned-phrases.md`. Flag every match:
+    banned words, inflated significance claims, contrastive reframing,
+    rule-of-three defaults, broad wrap-up sentences, weak verb inflation.
+    Remove or rewrite all matches.
+16. **Em dash count** — Count em dashes in full draft. If more than
+    1 per 400 words, replace excess with commas, parentheses, or periods.
+17. **Sentence rhythm** — Flag any run of 4 or more sentences within
+    5 words of the same length. Vary them.
+18. **Specificity check** — Flag vague positive language ("highly
+    effective", "significant improvement", "great results") where a
+    concrete number or observable fact should replace it.
+
+**Medical disclaimer check** — If the article discusses symptoms,
+diagnoses, treatments, medications, or health conditions:
+- Check if a medical disclaimer is present
+- If missing, flag: "[DISCLAIMER NEEDED] Add a medical disclaimer
+  before publication, e.g.: 'This article is for informational
+  purposes only and does not constitute medical advice. Consult a
+  qualified healthcare provider before making health decisions.'"
+- If client-config.md has Medical Disclaimer Required: yes, this
+  check runs regardless of content type.
 
 ### Phase 7: Delivery
 
@@ -504,10 +525,10 @@ Present the completed article with a summary:
 - [N] unique sources cited
 
 ### Visual Elements
-- Cover image: [source - Pixabay/Unsplash/Pexels or generated SVG]
-- [N] inline images (Pixabay/Unsplash/Pexels)
-- [N] SVG charts (types: bar, lollipop, donut, line)
-- [N] YouTube video embeds (titles: ...)
+- Cover image: [present in frontmatter / missing]
+- [N] image placeholders ([IMAGE NEEDED] markers with alt text)
+- [N] SVG charts generated
+- [N] information gain markers
 
 ### Dual-Optimization Elements
 - TL;DR box: present (N words)
