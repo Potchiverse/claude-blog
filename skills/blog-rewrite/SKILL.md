@@ -36,6 +36,15 @@ For 21 evidence-led optimization prompts (AI-detector test, CTR audit, schema, P
 
 ## Workflow
 
+### Step 0: Load Client Configuration
+
+Check if `client-config.md` exists in the current working directory.
+- If it exists: read it and apply all settings for this session
+  (brand voice notes, CMS platform, FAQ preference, schema preference,
+  internal linking targets, banned topics, medical disclaimer requirement).
+  Confirm to the user which settings were loaded.
+- If it does not exist: continue with defaults.
+
 ### Phase 1: Audit (Read-Only)
 
 1. **Read the blog post** - Detect format (MDX, markdown, HTML)
@@ -85,11 +94,25 @@ For 21 evidence-led optimization prompts (AI-detector test, CTR audit, schema, P
      terminology (first-order/second-order for slop-detection vs Tier 1/2/3 for source
      authority) is intentional: see `skills/blog/references/ai-slop-detection.md` for
      why the labels diverged in v1.8.1.
-4. **Video embed check**:
-   - Count existing YouTube embeds in the post
-   - If 0 embeds, flag: "No video embeds. YouTube has the strongest AI visibility correlation (0.737)"
-   - If present, check: lazy loading? aria-labels? noscript fallback? VideoObject schema?
-5. **Cannibalization check**:
+4. **Content quality scan**:
+   - **Banned phrase and pattern check** — Scan the full article against
+     `skills/blog/references/banned-phrases.md`. List every match with
+     the sentence it appears in. Include: banned words, inflated
+     significance claims, contrastive reframing, rule-of-three defaults,
+     broad wrap-up sentences, weak verb inflation, generic praise language.
+   - **Em dash audit** — Count total em dashes. Flag if more than
+     1 per 300 words.
+   - **Sentence rhythm** — Flag any run of 4 or more consecutive
+     sentences within 5 words of the same length.
+   - **Specificity check** — Flag vague positive language where a
+     concrete fact should replace it.
+   Report as a list with the offending sentence for each finding.
+5. **Image coverage check**:
+   - Count existing images in the article
+   - Note which major sections have no image or placeholder
+   - Do not search for stock images. Gaps will be marked as
+     [IMAGE NEEDED: alt text] during the rewrite phase.
+6. **Cannibalization check**:
    - Identify the post's primary keyword from title, H1, and first paragraph
    - Search the blog directory for other posts targeting the same keyword:
      - Grep headings and meta descriptions across all blog posts
@@ -98,11 +121,18 @@ For 21 evidence-led optimization prompts (AI-detector test, CTR audit, schema, P
      - Which posts compete for the same keyword
      - Recommend: **merge** (combine into one stronger post) or **differentiate**
        (shift one post to a related but distinct keyword)
-6. **Calculate current score** across 5 categories:
+**Medical disclaimer check**:
+- If the article discusses symptoms, diagnoses, treatments,
+  medications, or health conditions, check for a medical disclaimer
+- If missing, flag it in the audit summary
+- If client-config.md has Medical Disclaimer Required: yes,
+  always run this check
+
+7. **Calculate current score** across 5 categories:
    - Score across 5 categories (Content Quality 30, SEO Optimization 25, E-E-A-T Signals 15, Technical Elements 15, AI Citation Readiness 15)
    - Total: 0-100
-7. **Present audit summary** with specific findings, AI detection results, video status, cannibalization status, and score
-8. **Enter plan mode** - Present section-by-section optimization plan
+8. **Present audit summary** with specific findings, AI detection results, cannibalization status, and score
+9. **Enter plan mode** - Present section-by-section optimization plan
 
 Wait for user approval before proceeding.
 
@@ -112,14 +142,15 @@ Wait for user approval before proceeding.
 2. **Find replacement statistics** for any fabricated/unsourced data:
    - Search: `[topic] study 2025 2026 data statistics`
    - Target tier 1-3 sources only
-3. **Find images** if post has fewer than 3:
-   - Pixabay: `site:pixabay.com [topic keywords]`
-   - Unsplash: `site:unsplash.com [topic keywords]`
-   - Verify each URL returns HTTP 200
-   - If nanobanana-mcp is configured, offer AI generation for missing/insufficient images via `blog-image`
-4. **Plan charts** if post has fewer than 2:
-   - Identify data suitable for visualization
-   - Select diverse chart types
+3. **Flag image gaps**:
+   - Review the audit findings from Phase 1 step 5
+   - For each section identified as missing an image, prepare a
+     placeholder to insert during Phase 4:
+     [IMAGE NEEDED: one sentence describing what the image should show]
+   - Do not search stock photo sites.
+4. **Plan charts** only if the article contains 3 or more comparable
+   data points that would be clearer as a visualization than as prose.
+   If that condition is not met, skip chart planning.
 
 ### Phase 3: Chart Generation (Built-In)
 
@@ -177,13 +208,6 @@ Every H2 section MUST open with a 40-60 word paragraph containing:
 - Embed charts within relevant sections
 - If nanobanana-mcp configured: generate custom images for sections lacking good stock matches (invoke `blog-image` sub-skill via Task)
 - Adapt embed format to detected platform (MDX vs markdown vs HTML)
-
-#### 4h. Add Video Embeds
-If the post lacks YouTube video embeds:
-- Search 2-3 relevant videos using quality criteria from `references/video-embeds.md`
-- Embed using platform-appropriate format (srcdoc lazy loading)
-- Place: 1 after introduction, 1-2 in mid-article sections
-- Include noscript fallback for AI crawlers
 
 #### 4i. Add/Improve FAQ
 - If no FAQ exists, add one (3-5 questions)
@@ -269,6 +293,19 @@ If the post lacks original value markers:
 Use HTML comments (`<!-- [ORIGINAL DATA] -->`) or visible callouts depending
 on the post's style.
 
+### Phase 4.5: Voice Pass (Optional)
+
+Only run if the user's request included "use my voice", "apply voice",
+or "voice pass". Otherwise skip entirely and proceed to Phase 5.
+
+If triggered:
+1. Read `agents/blog-voice.md`
+2. Apply the voice rules to the Phase 4 rewritten draft
+3. Preserve all SEO elements: answer-first formatting, citation capsules,
+   frontmatter, FAQ schema, internal link zones, statistics, disclaimers
+4. Do not alter statistics or source attributions
+5. Return voice-styled draft before Phase 5
+
 ### Phase 5: Verification
 
 After rewriting, verify all quality gates pass:
@@ -291,12 +328,13 @@ After rewriting, verify all quality gates pass:
 13. No AI-detectable phrases remain from banned list
 
 #### Burstiness and Naturalness Check
-14. Sentence length variance: SD > 6 (mix of short and long sentences)
+14. No banned phrases or patterns from `skills/blog/references/banned-phrases.md` remain in the final draft
 15. Contractions used naturally throughout
 16. Rhetorical questions present (1 per 200-300 words)
 17. AI content estimate reduced from audit baseline
 18. Score improved across all 5 categories vs Phase 1 audit
-19. YouTube video embeds present with lazy loading, aria-labels, and noscript fallback
+19. Image placeholders present in sections that lack client-provided images
+20. Em dash count within limit: max 1 per 300 words
 
 ### Phase 6: Summary
 

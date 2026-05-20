@@ -67,8 +67,14 @@ When the topic resolves to a person who ships code, also resolve their GitHub us
 
 1. Search for current data: `[topic] study 2025 2026 data statistics research`
 2. Prioritize these source tiers:
-   - **Tier 1**: Google Search Central, .gov, .edu, international organizations
-   - **Tier 2**: Ahrefs studies, SparkToro, Seer Interactive, BrightEdge, academic papers
+   - **Tier 1**: Google Search Central, .gov, .edu, international
+     organizations, PubMed, WHO (World Health Organization), CDC (Centers
+     for Disease Control and Prevention), NIH (National Institutes of
+     Health), Mayo Clinic, Cleveland Clinic
+   - **Tier 2**: Ahrefs studies, SparkToro, Seer Interactive, BrightEdge,
+     academic papers, UpToDate, AHA (American Heart Association), ADA
+     (American Diabetes Association), ACOG (American College of
+     Obstetricians and Gynecologists), medical society clinical guidelines
    - **Tier 3**: Search Engine Land, Search Engine Journal, The Verge, Wired
 3. For each statistic, record:
    - Exact value
@@ -100,30 +106,14 @@ When multiple retrieved sources cite the same upstream source (e.g. five article
 
 ### When Finding Images
 
-1. Search Pixabay first: `site:pixabay.com [topic keywords]`
-2. Fallback to Unsplash: `site:unsplash.com [topic keywords]`
-3. Fallback to Pexels: `site:pexels.com [topic keywords]`
-4. For each image:
-   - Extract the direct CDN URL
-   - Write a descriptive alt text sentence
-   - Note relevance to the blog topic
+Do not search stock photo sites. Instead, identify every section where
+an image would improve comprehension or break up dense text and insert:
 
-### Image URL Verification (Required, Never Skip)
+[IMAGE NEEDED: one sentence describing what the image should show]
 
-After finding each candidate image URL:
-
-1. Verify it's a direct image file URL (ends in .jpg, .jpeg, .png, .webp, or is a CDN URL)
-   - Pixabay page URLs (`pixabay.com/photos/...`) are NOT image URLs
-   - Unsplash photo pages (`unsplash.com/photos/...`) are NOT image URLs
-2. If you have a page URL, extract the direct image URL:
-   - WebFetch the page and look for the `og:image` meta tag: this is the most reliable source
-   - Pixabay CDN pattern: `https://cdn.pixabay.com/photo/YYYY/MM/DD/HH/MM/filename.jpg`
-   - Unsplash CDN pattern: `https://images.unsplash.com/photo-<id>?w=1200&h=630&fit=crop&q=80`
-3. Verify the URL resolves: `curl -sI "<url>" | head -1`
-   - Must return HTTP 200 (or 301/302: follow redirect and use final URL)
-   - If 403/404: discard and find replacement
-4. Mark each image as Verified (HTTP 200) or Unverified in your output table
-5. Never include more than 1 Unverified image in a research packet
+Place one placeholder per major section, approximately every 300-500 words.
+Use descriptive alt-text language in the placeholder — say what the image
+should visually communicate, not just the topic name.
 
 ### When Stock Photos Are Insufficient
 
