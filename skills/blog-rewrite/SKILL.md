@@ -342,7 +342,6 @@ After rewriting, verify all quality gates pass:
 ### Visual Elements
 - Charts: [count] ([types])
 - Images: [count]
-- YouTube videos: [count] ([titles])
 
 ### Ready for
 - `/blog analyze <file>` to verify final score
