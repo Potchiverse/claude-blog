@@ -260,7 +260,7 @@ Reading time: word count ÷ 225, rounded up. Optimal reading time is
 | Parameter | Target | GEO-Optimized | Source |
 |-----------|--------|--------------|--------|
 | Statistic density | 1 per 200 words | 1 per 150 words | Princeton GEO paper |
-| External citations | 1-3 per 1,000 words | - | GEO best practices |
+| External hyperlinks | 2 to 3 per 1,000 words | max 5 per 2,000 words | GEO + claude-blog house rule |
 | Internal links | 2-5 per 1,000 words | - | SEO + engagement |
 
 Statistics addition boosts AI visibility up to 41% (Princeton GEO paper,
@@ -269,15 +269,20 @@ visibility up to 115%. The combination of fluency + statistics outperforms
 any single optimization tactic by 5.5%.
 
 ### Attribution Format
-Always attribute statistics: `[Number]% [claim] ([Source](url), [Year])`.
-Unattributed statistics damage E-E-A-T trust signals and are flagged as
-fabrication risks in quality scoring.
+Attribute every statistic. Most attributions are prose-only; a small budget of inline hyperlinks goes to the most consequential data points. Unattributed statistics damage E-E-A-T trust signals and are flagged as fabrication risks in quality scoring.
 
 **FLOW evidence triple format (drafting requirement):**
 
 - Year anchor in prose: "In 2026, [Source] found..." (NOT: "...found ... (Source, 2026).")
-- Inline citation: publisher AND title, e.g. "Ahrefs, AI Overviews CTR update".
-- Source block: full URL plus `retrieved YYYY-MM-DD` for every cited source.
+- Publisher named in prose, never inside the hyperlink. Example: "a JAMA Dermatology study estimated [more than 7.5 million U.S. adults](url) have psoriasis" (publisher in prose, link on the data). NOT: `[JAMA Dermatology, 2024](url) found...`
+- Source block: full URL plus `retrieved YYYY-MM-DD` for every cited source, hyperlinked or not.
+
+**Inline hyperlink budget (house rule):**
+
+- Maximum 5 inline hyperlinks per 2,000 words; target 2 to 3 per 1,000 words.
+- Anchor text is the data or fact itself, never the brand or publication. 4 words max. Examples: `[19.8 million U.S. adults](url)`, `[58% lower CTR](url)`.
+- Cited stats that do not earn a hyperlink stay prose-only with reader-friendly attribution. Example: "A recent analysis of 2021 to 2024 National Health Interview Survey data estimates roughly 19.8 million U.S. adults currently live with AD."
+- Voice: reader-friendly, not academic. Drop "(Source, Year)" tails and APA-lite parenthetical citations.
 
 Drop unverifiable stats. Replace contradicted stats with verified alternatives. See `flow-alignment.md`.
 
@@ -307,8 +312,9 @@ Rules:
 
 ## Citation Format
 
-Inline: `[Number]% [claim] ([Source](url), [Year])`. Always name the source.
-Study: Name the paper, institution, and year. Quote: Use quotation marks with speaker name and date.
+Prose-first: name the publisher in the sentence, not inside the link. When a stat earns one of the limited inline hyperlinks, anchor on the data or fact (4 words max), never on the brand or title. Example: "the CDC found [1 in 10 children](url) develop AD." Most citations stay prose-only and rely on the source block at the bottom of the post for the URL.
+
+Study: name the paper, institution, and year in prose. Quote: use quotation marks with speaker name and date. See `flow-alignment.md` for the full triple plus hyperlink budget.
 
 ## Citation Tiers
 

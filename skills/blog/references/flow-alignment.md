@@ -11,8 +11,17 @@ FLOW is an evidence-led 2026-search operating model published at `github.com/Agr
 Every public statistic in a claude-blog post must satisfy three components.
 
 1. **Year anchor in prose.** Write "In 2026," or "As of Q1 2026," BEFORE the statistic, not buried in a parenthetical. Example: "In 2026, Ahrefs found a 58% lower CTR for position-one results when an AI Overview was present." Not: "Position-one CTR dropped 58% (Ahrefs, 2026)."
-2. **Inline citation.** Publisher plus title (or document name) inline with the claim. Example: "Ahrefs, AI Overviews CTR update, December 2025."
-3. **URL with retrieval date.** Full URL plus `retrieved YYYY-MM-DD` in a bibliography or source block at the end of the post. This is provenance discipline; it lets future readers (and AI crawlers) verify the source still says what was claimed.
+2. **Publisher named in prose, not inside the hyperlink.** Attribute the source in the sentence ("a JAMA Dermatology study", "Ahrefs reported", "the CDC found") and let the prose carry the trust signal. The publisher name, document title, and year never become the link text. Read like a published article, not a footnoted academic paper.
+3. **URL with retrieval date in the source block.** Every cited source belongs in the bibliography or source block at the end of the post with full URL plus `retrieved YYYY-MM-DD`, whether or not it also carries an inline hyperlink. This is provenance discipline; it lets future readers (and AI crawlers) verify the source still says what was claimed.
+
+### Inline hyperlink budget and anchor rules
+
+Inline hyperlinks are scarce by design. Most cited facts use prose attribution alone; the source block at the bottom carries the rest.
+
+- **Budget.** Maximum 5 inline hyperlinks per 2,000-word post; target 2 to 3 per 1,000 words. Reserve them for the highest-value data points (the single most surprising statistic per section, the load-bearing claim of the article). Do not link every cited stat.
+- **Anchor text.** The linked text is the data or fact itself, never the brand, publication, or document title. Maximum 4 words. Examples: `[19.8 million U.S. adults](url)`, `[58% lower CTR](url)`, `[7.5 million U.S. adults](url)`. Not: `[JAMA Dermatology study](url)` or `[Ahrefs, AI Overviews CTR update, 2025](url)`.
+- **Unlinked citations stay prose-only.** When a stat does not earn one of the limited hyperlinks, attribute it in reader-friendly prose without a link. Example: "A recent analysis of 2021 to 2024 National Health Interview Survey data estimates roughly 19.8 million U.S. adults currently live with AD." The bibliography at the bottom carries the URL.
+- **Voice.** Write for a reader, not a peer reviewer. Drop academic citation tails like "(Source, 2024)" and "([Author et al., Title, Year](url))". Patient-friendly or consumer-friendly phrasing beats inflated academic register.
 
 Public claims must use verified sources OR stay qualitative. Unverifiable stats get dropped, contradicted stats get replaced with a verified alternative. This is the FLOW quality bar adopted verbatim.
 

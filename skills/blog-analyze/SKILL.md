@@ -105,7 +105,7 @@ score differential). Average US adult reads at 7th-8th grade level.
 | Trust indicators | 4 | Contact page, about page, editorial policy |
 | Experience signals | 3 | "When we tested...", original photos/data |
 
-When scoring source citations under E-E-A-T, evaluate whether each public statistic carries the FLOW evidence triple: year anchor in prose, inline citation with publisher and title, URL with retrieval date in the source block. Posts that cite tier 1-3 sources but lack retrieval dates score lower on this subcategory than posts that include the full triple. See `skills/blog/references/flow-alignment.md` for the standard.
+When scoring source citations under E-E-A-T, evaluate whether each public statistic carries the FLOW evidence triple: year anchor in prose, publisher attribution in prose (not inside hyperlinks), URL with retrieval date in the source block. Inline hyperlinks should stay within budget (max 5 per 2,000 words; 2 to 3 per 1,000 words) and anchor on the data (4 words max), not the publisher or title. Posts that cite tier 1-3 sources but lack retrieval dates, exceed the hyperlink budget, or use `[Publisher, Year](url)`-style anchors score lower on this subcategory than posts that follow the full triple plus hyperlink rules. See `skills/blog/references/flow-alignment.md` for the standard.
 
 #### Technical Elements (15 points)
 | Check | Points | Pass Criteria |

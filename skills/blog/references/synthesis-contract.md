@@ -55,23 +55,37 @@ is a raw-dump, not synthesis. Stop and regenerate.
 
 ---
 
-## LAW 5: Every citation is an inline markdown link `[name](url)`
+## LAW 5: Every citation has a verifiable URL; inline hyperlinks are budgeted and anchored on data, not names
 
-In synthesis prose, every cited @handle, subreddit, publication, YouTube channel, person, or organization is wrapped as `[name](url)` at first mention. Never:
+Every cited @handle, subreddit, publication, YouTube channel, person, or organization must have a URL traceable from the synthesis. The URL lives in one of two places: an inline `[anchor](url)` when the claim earns one of the limited inline hyperlinks, or a source block at the end of the output with full URL plus retrieval date. Never leave a citation as plain text with no URL anywhere.
+
+**Anchor and budget rules for inline hyperlinks:**
+
+- Anchor text is the data, claim, or fact (4 words maximum). Never the brand, publication, or document title.
+- Maximum 5 inline hyperlinks per 2,000 words; target 2 to 3 per 1,000 words. Reserve them for the most consequential claims.
+- Publisher attribution stays in the prose around the link, not inside the link text.
+- All other cited sources go in the source block at the end. They are still verifiable; they just are not hyperlinked.
+
+**Good examples** (anchor on the data):
+- `the CDC found [1 in 10 children](https://...) develop AD`
+- `Ahrefs reported [58% lower CTR](https://...) for position-one results with AI Overviews present`
+- `a JAMA Dermatology study estimated that [more than 7.5 million U.S. adults](https://...) have psoriasis`
+
+**Bad examples** (anchor on the publisher or title, or over-budget):
+- `per [Rolling Stone](https://...)` (anchor on publication name)
+- `[Ahrefs, AI Overviews CTR update, 2025](https://...) reported a 58% drop` (anchor on publisher + title + year; reads like an APA footnote)
+- Wrapping every cited source as a hyperlink instead of using prose attribution plus a source block
+
+Never:
 - A raw URL string: `per https://www.example.com/path/...`
-- A plain name when a URL is available: `per Rolling Stone`
+- A cited source with no URL anywhere (no inline link AND no source-block entry): `per Rolling Stone`
 - A broken empty link: `per [Rolling Stone]()`
 
-**Good examples**:
-- `per [Rolling Stone](https://www.rollingstone.com/...)`
-- `per [@username](https://x.com/username)`
-- `[r/subname](https://reddit.com/r/subname)`
+**Fallback** (URL genuinely missing in source data): plain text for that one citation only, and flag it in the synthesis.
 
-**Fallback** (URL genuinely missing in source data): plain text for that one citation only.
+**Why this matters**: the published blog should read like a published article, not a footnoted academic paper. Source-block discipline preserves traceability; a budgeted inline-hyperlink count highlights the claims worth linking; data-as-anchor patterns improve link CTR and avoid the AI-detectable `[Publisher, Year](url)` tail.
 
-**Why this matters**: inline links are the citation. They satisfy LAW 1's "no trailing Sources block" rule while still providing every reader with a clickable verification path. Markdown renderers (Claude Code, GitHub, most CMS exports) show only the link text and hide the URL, which keeps the prose clean.
-
-**Count check**: count `[name](url)` patterns in your synthesis. If zero, and the source data has URLs, regenerate with inline links added.
+**Count check**: count `[name](url)` patterns per 1,000 words in the synthesis. If above 3, reduce. If the source data has URLs that did not earn an inline link, ensure they land in the source block at the end.
 
 ---
 
