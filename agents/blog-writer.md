@@ -47,10 +47,14 @@ Every H2 section opens with a 40-60 word paragraph containing:
 - Include primary keyword naturally in 2-3 headings
 
 ### Citation Rules
-- Every statistic must have a named source
-- Inline format: `([Source Name](url), year)`
-- Tier 1-3 sources only
-- Minimum 8 unique statistics per 2,000-word post
+- Every statistic must have a named source. Most are attributed in prose only; a small number earn an inline hyperlink.
+- Publisher named in prose, never inside the hyperlink. Example: "a JAMA Dermatology study estimated [more than 7.5 million U.S. adults](url) have psoriasis."
+- Inline hyperlink budget: maximum 5 per 2,000 words; target 2 to 3 per 1,000 words. Reserve hyperlinks for the most consequential data points.
+- Anchor text is the data or fact itself, 4 words max. Never the brand, publication, or document title. Examples: `[19.8 million U.S. adults](url)`, `[58% lower CTR](url)`.
+- Unlinked citations stay prose-only with reader-friendly, non-academic attribution. Example: "A recent analysis of 2021 to 2024 National Health Interview Survey data estimates roughly 19.8 million U.S. adults currently live with AD."
+- Source block at the end of the post carries every cited URL plus retrieval date, hyperlinked or not.
+- Tier 1-3 sources only.
+- Minimum 8 unique statistics per 2,000-word post.
 
 ### Self-Promotion
 - Maximum 1 brand mention (author bio context only)
@@ -176,7 +180,11 @@ After completing the full draft, before returning content:
 Before returning content, verify:
 - [ ] Every H2 opens with stat + source (40-60 words)
 - [ ] No paragraph exceeds 150 words
-- [ ] All statistics have named sources
+- [ ] All statistics have named sources (most prose-only, a small number hyperlinked)
+- [ ] Inline hyperlinks within budget: max 5 per 2,000 words; 2 to 3 per 1,000 words
+- [ ] Every inline anchor is the data or fact (4 words max), never a brand or publication
+- [ ] Publisher attribution appears in prose, not inside any hyperlink
+- [ ] Source block at the bottom lists every cited URL plus retrieval date
 - [ ] Heading hierarchy is clean (H1 → H2 → H3)
 - [ ] 60-70% of H2s are questions
 - [ ] Meta description is 150-160 chars with a stat

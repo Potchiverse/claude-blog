@@ -144,8 +144,8 @@ Do NOT use this template for:
 **FLOW evidence triple (required for every statistic in this template):**
 
 - Year anchor in prose: write "In 2026, ..." or "As of Q1 2026, ..." BEFORE the number, not in a parenthetical.
-- Inline citation: name the publisher AND the document or report title.
-- Source block at the bottom: include the full URL plus `retrieved YYYY-MM-DD` for every cited source.
+- Publisher named in prose, never inside a hyperlink. Reserve the limited inline hyperlinks (max 5 per 2,000 words; 2 to 3 per 1,000 words) for the highest-value data points, with the data itself as the 4-word-max anchor. Example: "a JAMA Dermatology study estimated [more than 7.5 million U.S. adults](url) have psoriasis."
+- Source block at the bottom: include the full URL plus `retrieved YYYY-MM-DD` for every cited source, hyperlinked or not.
 
 Drop unverifiable stats. Replace contradicted stats with verified alternatives. Reference: `skills/blog/references/flow-alignment.md`.
 

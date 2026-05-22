@@ -137,7 +137,7 @@ claude-blog adopts the FLOW evidence-led model (`github.com/AgriciDaniel/flow`, 
 | Pillar | FLOW concept it implements | claude-blog adds beyond FLOW |
 |--------|---------------------------|------------------------------|
 | Answer-First Formatting | "Extraction-readable" passages for AI Overviews and assistant citations | Concrete 40-60 word format spec |
-| Real Sourced Data | The FLOW evidence triple: year anchor in prose + inline citation (publisher + title) + URL with retrieval date | Tier 1-3 source classification, `blog-factcheck` automation |
+| Real Sourced Data | The FLOW evidence triple: year anchor in prose + publisher named in prose (not inside hyperlinks) + URL with retrieval date in source block. Inline hyperlinks are budgeted (max 5 per 2,000 words) with data-as-anchor, 4 words max | Tier 1-3 source classification, `blog-factcheck` automation |
 | Visual Media | (Outside FLOW scope; FLOW is asset-agnostic) | Full pipeline: Gemini image gen, SVG charts, stock libraries, YouTube embeds |
 | FAQ Schema | Structured Q&A as an AI-citation surface signal | JSON-LD generation via `blog-schema` |
 | Content Structure | "AI-readable document" with clear headings, direct answers, source labels | 50-150 word chunk rule, proper H hierarchy enforcement |

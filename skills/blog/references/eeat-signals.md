@@ -237,7 +237,7 @@ Trust encompasses and validates all other signals.
 | Expert review | "Reviewed by [Expert Name], [credentials]" |
 | Date transparency | Publish date AND last updated date visible |
 
-**Trustworthiness requires the FLOW evidence triple.** Experience and authority signals only land when the underlying claims are verifiable: year anchor in prose, inline citation with publisher and title, URL with retrieval date in the source block. See `flow-alignment.md`.
+**Trustworthiness requires the FLOW evidence triple.** Experience and authority signals only land when the underlying claims are verifiable: year anchor in prose, publisher named in prose (not inside hyperlinks), URL with retrieval date in the source block. Inline hyperlinks stay within budget (max 5 per 2,000 words) and anchor on the data, not the publisher. See `flow-alignment.md`.
 
 ---
 
